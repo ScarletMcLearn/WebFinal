@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>New Task</title>
+  </head>
+  <body>
+    <h1>New Task</h1>
+    
+    <input type="text" id="task-name" placeholder="Task" required><br/><br/>
+    
+    <textarea id="content" placeholder="Priority" required></textarea><br/>
+    
+    <input type="number" id="priority" name="priority"
+       min="0" max="10" placeholder='PRIORITY (0 TO 10)' required><br/>
+       
+        <textarea id="notes" placeholder="Notes" required></textarea><br/>
+    
+    
+    <!--submit er jaygay add liksi -->
+    <button id="add">Add</button>
+    
+    <button id="getArticles">Get all tasks</button>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"></script>
+      
+      
+    <script>
+      var task = {task-name:"", priority:"", notes:""};
+      $('#add').click(function(event){
+        task.task-name = $('#task-name').val();
+        task.priority = $('#priority').val();
+        task.notes = $('#notes').val();
+        $.ajax({
+          method:"POST",
+          url:"/task/create",
+          data: task
+        }).done(function(response){
+          console.log(response);
+        }).fail(function(response){
+          console.log(response.responseText);
+        });
+      });
+
+      $('#getTasks').click(function(event){
+        $.ajax({
+          method:"GET",
+          url:"/task/list"
+        }).done(function(response){
+          console.log(response);
+        }).fail(function(response){
+          console.log(response.responseText);
+        });
+      });
+
+    </script>
+  </body>
+</html>
